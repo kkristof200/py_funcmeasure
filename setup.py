@@ -9,14 +9,14 @@ else:
 
 setuptools.setup(
     name="funcmeasure",
-    version="0.0.1",
+    version="0.0.2",
     author="Kristof",
     description="funcmeasure",
     long_description=long_description,
     long_description_content_type="text/markdown",
     url="https://github.com/kkristof200/py_funcmeasure",
     packages=setuptools.find_packages(),
-    install_requires=[],
+    install_requires=[""],
     classifiers=[
         "Programming Language :: Python :: 3",
         "License :: OSI Approved :: MIT License",

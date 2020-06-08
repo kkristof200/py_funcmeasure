@@ -1,4 +1,4 @@
-from funcmeasure import measure
+from funcmeasure import measure, partial, Measurement
 
 def f1():
     5**2
@@ -6,4 +6,4 @@ def f1():
 def f2():
     5**2**10
 
-measure([f1, f2], times=1000)
+measurements = measure([f1, f2], times=1000, print_benchmark=True)

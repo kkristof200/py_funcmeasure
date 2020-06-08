@@ -3,6 +3,7 @@
 
 ## Todo
 - Clean up code because it's messy af
+- Add support for easier creation of partials
 
 ## Description
 Measure and compare function execution times

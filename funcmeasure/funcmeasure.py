@@ -1,7 +1,7 @@
 # --------------------------------------------------------------- Imports ---------------------------------------------------------------- #
 
 # System
-from typing import List, Callable
+from typing import List, Callable, Union, Tuple, Dict, Optional
 import time
 
 # Local
@@ -14,13 +14,51 @@ from .measurement import Measurement
 # ------------------------------------------------------------ Public methods ------------------------------------------------------------ #
 
 def measure(
-    funcs: List[Callable],
+    funcs: Union[List[Union[Callable, Tuple[Callable, str]]], Dict[Callable, Optional[str]]],
     times: int = 1000,
     print_benchmark: bool = True
 ) -> List[Measurement]:
+    """Measure and compare execution times of functions
+
+    Args:
+        funcs (Union[List[Union[Callable, Tuple[Callable, str]]], Dict[Callable, Optional[str]]]):
+            The functions that will be measured.
+            This can be a list or a dictionary.
+            If dictionary is passed, the name of the function will be 
+                overwritten with the name of the specified value.
+            If a list is passed, the values can be either a Callable
+                or a Tuple of Callable and string(custom function name)
+
+            Example values:
+                - List: [f1, (f2, 'second'), f3]
+                - Dict: {
+                      f1: 'first',
+                      f2: 'second',
+                      f3: None
+                  }
+
+    Kwargs:
+        times (int, optional): How many times will each function be measured. Defaults to 1000.
+
+        print_benchmark (bool, optional): Print results or no. Defaults to True.
+
+    Returns:
+        List[Measurement]: List of Measurement objects
+    """
     measurements = []
 
-    for func in funcs:
+    if isinstance(funcs, list):
+        _funcs = {}
+
+        for func in funcs:
+            if isinstance(func, tuple):
+                _funcs[func[0]] = func[1]
+            else:
+                _funcs[func] = func.__name__
+        
+        funcs = _funcs
+
+    for func, func_name in funcs.items():
         total_duration = 0
 
         for _ in range(0, times):
@@ -30,7 +68,7 @@ def measure(
 
         measurements.append(
             Measurement(
-                func.__name__,
+                func_name or func.__name__,
                 total_duration,
                 times
             )

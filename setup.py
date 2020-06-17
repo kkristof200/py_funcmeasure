@@ -9,7 +9,7 @@ else:
 
 setuptools.setup(
     name="funcmeasure",
-    version="0.0.3",
+    version="0.0.4",
     author="Kristof",
     description="funcmeasure",
     long_description=long_description,

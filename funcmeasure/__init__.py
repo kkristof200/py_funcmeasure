@@ -1,1 +1,1 @@
-from .funcmeasure import *
+from .funcmeasure import measure, partial, Measurement

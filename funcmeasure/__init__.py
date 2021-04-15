@@ -1,1 +1,3 @@
-from .funcmeasure import measure, partial, Measurement
+from .funcmeasure import measure, partial
+
+from .models import *

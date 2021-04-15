@@ -1,13 +1,25 @@
 # funcmeasure
-![python_version](https://img.shields.io/static/v1?label=Python&message=3.5%20|%203.6%20|%203.7&color=blue) [![PyPI downloads/month](https://img.shields.io/pypi/dm/funcmeasure?logo=pypi&logoColor=white)](https://pypi.python.org/pypi/funcmeasure)
 
-## Todo
-- Clean up code because it's a bit messy
+![PyPI - package version](https://img.shields.io/pypi/v/funcmeasure?logo=pypi&style=flat-square)
+![PyPI - license](https://img.shields.io/pypi/l/funcmeasure?label=package%20license&style=flat-square)
+![PyPI - python version](https://img.shields.io/pypi/pyversions/funcmeasure?logo=pypi&style=flat-square)
+![PyPI - downloads](https://img.shields.io/pypi/dm/funcmeasure?logo=pypi&style=flat-square)
+
+![GitHub - last commit](https://img.shields.io/github/last-commit/kkristof200/py_funcmeasure?style=flat-square)
+![GitHub - commit activity](https://img.shields.io/github/commit-activity/m/kkristof200/py_funcmeasure?style=flat-square)
+
+![GitHub - code size in bytes](https://img.shields.io/github/languages/code-size/kkristof200/py_funcmeasure?style=flat-square)
+![GitHub - repo size](https://img.shields.io/github/repo-size/kkristof200/py_funcmeasure?style=flat-square)
+![GitHub - lines of code](https://img.shields.io/tokei/lines/github/kkristof200/py_funcmeasure?style=flat-square)
+
+![GitHub - license](https://img.shields.io/github/license/kkristof200/py_funcmeasure?label=repo%20license&style=flat-square)
 
 ## Description
+
 Measure and compare function execution times
 
 ## Install
+
 ~~~~bash
 pip install funcmeasure
 # or
@@ -15,8 +27,9 @@ pip3 install funcmeasure
 ~~~~
 
 ## Usage
+
 ~~~~python
-from funcmeasure import measure, partial, Measurement
+from funcmeasure import measure, FunctionStats, TableFormat
 
 def f1():
     5**2
@@ -27,9 +40,9 @@ def f2():
 def f3():
     5**2**2**2
 
-measurements = measure([f1, (f2, 'second'), f3], times=1000)
-
-measurements = measure(
+# stats = measure([f1, (f2, 'second'), f3], times=1000)
+# or
+stats = measure(
     {
         f1: None,
         f2: 'second',
@@ -37,29 +50,22 @@ measurements = measure(
     },
     times=1000
 )
-~~~~
-These will print:
-~~~~
-Ran 1000 times
 
--------------------------------------------
-| rank |  name  |   duration  | benchmark |
--------------------------------------------
-|    1 |     f1 | 0.00000023s |           |
-|    2 |     f3 | 0.00000026s |     1.12x |
-|    3 | second | 0.00000263s |    11.22x |
--------------------------------------------
-
-Ran 1000 times
-
--------------------------------------------
-| rank |  name  |   duration  | benchmark |
--------------------------------------------
-|    1 |     f3 | 0.00000024s |           |
-|    2 |     f1 | 0.00000026s |     1.07x |
-|    3 | second | 0.00000260s |    10.91x |
--------------------------------------------
+# prints
+#
+# Ran 3 functions. 1000 times each.
+#
+# ╒════╤════════╤════════════╤══════════════╤═════════════╤══════════════╤═════════════╕
+# │    │   Name │   Avg (ms) │   Total (ms) │   Best (ms) │   Worst (ms) │   Benchmark │
+# ╞════╪════════╪════════════╪══════════════╪═════════════╪══════════════╪═════════════╡
+# │  0 │     f3 │   0.002123 │     2.122589 │    0.001892 │     0.007872 │             │
+# ├────┼────────┼────────────┼──────────────┼─────────────┼──────────────┼─────────────┤
+# │  1 │     f1 │   0.002282 │     2.281747 │    0.001952 │     0.062483 │      ~1.07x │
+# ├────┼────────┼────────────┼──────────────┼─────────────┼──────────────┼─────────────┤
+# │  2 │ second │   0.004946 │     4.946447 │    0.004395 │     0.053278 │      ~2.33x │
+# ╘════╧════════╧════════════╧══════════════╧═════════════╧══════════════╧═════════════╛
 ~~~~
 
-## Notes
-The lib also provides a helper function for partials, so you don't have to import functools
+## Dependencies
+
+[jsoncodable](https://pypi.org/project/jsoncodable), [tabulate](https://pypi.org/project/tabulate)
